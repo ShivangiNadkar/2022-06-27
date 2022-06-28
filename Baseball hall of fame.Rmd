@@ -1,0 +1,34 @@
+---
+title: "Baseball hall of fame"
+output: html_document
+date: '2022-06-28'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(rvest)
+```
+
+Useful link:
+https://en.wikipedia.org/wiki/List_of_members_of_the_Baseball_Hall_of_Fame
+
+```{r}
+echo = FALSE
+hof <- "https://en.wikipedia.org/wiki/List_of_members_of_the_Baseball_Hall_of_Fame"
+
+x <- read_html(hof) |>
+  html_elements("table") |>
+  html_table()
+
+baseball <- x[[3]]
+```
+
+```{r}
+echo = FALSE
+baseball |>
+  select(Year, Name)|>
+  ggplot(aes(x = Year)) +
+  geom_bar()
+```
+
